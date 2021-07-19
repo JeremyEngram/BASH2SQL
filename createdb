@@ -1,0 +1,4 @@
+#!/bin/bash
+echo -n "Create DB: "
+read db
+echo "create database $db;" | sudo mysql

@@ -1,0 +1,9 @@
+#!/bin/bash
+echo -n "Table:: "
+read table
+echo -n "Field: "
+read field
+echo -n "Value: "
+read value
+echo "SELECT * FROM [$table] WHERE [$field] = "$value";" | sudo mysql
+

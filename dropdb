@@ -1,0 +1,4 @@
+#!/bin/bash
+echo -n "Drop_DB: "
+read db
+echo "drop database $db" | sudo mysql

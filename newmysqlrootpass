@@ -1,0 +1,4 @@
+#!/bin/bash
+echo -n "NEW MYSQL ROOT PASS: "
+read pass
+sudo mysqladmin -u root password $pass

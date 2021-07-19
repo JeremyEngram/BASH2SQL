@@ -1,0 +1,7 @@
+#!/bin/bash
+echo " Flush Privileges "
+echo "flush privileges;" | sudo mysql
+
+
+
+

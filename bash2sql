@@ -1,0 +1,6 @@
+#!/bin/bash
+echo -n "Enter '.sql' File: "
+read sqlcmd
+echo "sudo mysql --host=localhost --user=root --password=hacker < $sqlcmd.sql"
+sudo mysql --host=localhost --user=root --password=hacker < sqlcmd.sql
+
