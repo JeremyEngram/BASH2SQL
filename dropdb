@@ -1,4 +1,3 @@
 #!/bin/bash
-echo -n "Drop_DB: "
-read db
-echo "drop database $db" | sudo mysql
+echo "show databases;" | mysql
+read -p "DROP_db: " db; echo "drop database $db" | sudo mysql
