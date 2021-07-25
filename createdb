@@ -1,4 +1,3 @@
 #!/bin/bash
-echo -n "Create DB: "
-read db
-echo "create database $db;" | sudo mysql
+read -p "Create DB" db; echo "create database $db;" | sudo mysql
+echo "show databases;" | sudo mysql
