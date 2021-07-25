@@ -1,6 +1,12 @@
 #!/bin/bash
 
-inputfile="test.txt"
-cat $inputfile | while read ip mac server; do
-    echo "INSERT INTO test (IP,MAC,SERVER) VALUES ('$ip', '$mac', '$server');"
-done | mysql -uroot -ptest test;
+  read -p "Cmd2SQL: " string; echo "INSERT INTO commands (STRING) VALUES ('$string');" | sudo mysql
+
+# inputfile="test.txt"
+# cat $inputfile | while read ip mac server; do
+#    echo "INSERT INTO test (IP,MAC,SERVER) VALUES ('$ip', '$mac', '$server');"
+# done | sudo mysql -uroot -ptest test;
+
+#LOAD DATA INFILE 'test.txt'
+#    INTO TABLE tbl_name
+#    FIELDS TERMINATED BY ' ';
