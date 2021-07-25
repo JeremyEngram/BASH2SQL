@@ -1,6 +1,6 @@
 #!/bin/bash
 echo -n "Select * FROM DB: "
 read db
-echo "create database $db;" | sudo mysql
+echo "Select * FROM $db;" | sudo mysql
 
 
