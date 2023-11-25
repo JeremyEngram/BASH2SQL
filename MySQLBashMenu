@@ -1,0 +1,46 @@
+#!/bin/bash
+
+# Function to display the menu
+show_menu() {
+    echo "MySQL Database Management Menu"
+    echo "1. List Databases"
+    echo "2. Create Database"
+    echo "3. Drop Database"
+    echo "4. Exit"
+}
+
+# Function to list databases
+list_databases() {
+    echo "Listing databases..."
+    mysql -u username -p -e "SHOW DATABASES;"
+}
+
+# Function to create a database
+create_database() {
+    echo "Enter database name to create:"
+    read dbname
+    mysql -u username -p -e "CREATE DATABASE $dbname;"
+    echo "Database $dbname created."
+}
+
+# Function to drop a database
+drop_database() {
+    echo "Enter database name to drop:"
+    read dbname
+    mysql -u username -p -e "DROP DATABASE $dbname;"
+    echo "Database $dbname dropped."
+}
+
+# Main loop
+while true; do
+    show_menu
+    echo "Enter choice:"
+    read choice
+    case $choice in
+        1) list_databases ;;
+        2) create_database ;;
+        3) drop_database ;;
+        4) exit 0 ;;
+        *) echo "Invalid choice." ;;
+    esac
+done
