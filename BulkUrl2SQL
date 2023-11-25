@@ -1,0 +1,26 @@
+#!/bin/bash
+
+# Database credentials
+DB_USER="username"
+DB_PASS="password"
+DB_NAME="database_name"
+TABLE_NAME="table_name"
+COLUMN_NAME="url_column"
+
+# File containing URLs
+URL_FILE="urls.txt"
+
+# Function to insert a single URL into the database
+insert_url() {
+    local url=$1
+    local insert_sql="INSERT INTO $TABLE_NAME ($COLUMN_NAME) VALUES ('$url');"
+    mysql -u$DB_USER -p$DB_PASS $DB_NAME -e "$insert_sql"
+}
+
+# Read URLs from the file and insert them into the database
+while IFS= read -r url
+do
+    insert_url "$url"
+done < "$URL_FILE"
+
+echo "URLs have been inserted into the database."
