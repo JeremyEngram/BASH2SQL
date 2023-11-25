@@ -1,0 +1,13 @@
+#!/bin/bash
+
+# Define MySQL credentials
+DB_USER="username"
+DB_PASS="password"
+DB_NAME="database_name"
+TABLE_NAME="table_name"
+
+# Define the query
+QUERY="SELECT * FROM $TABLE_NAME;"
+
+# Execute the query and format the output as CSV
+mysql -u$DB_USER -p$DB_PASS $DB_NAME -e "$QUERY" | sed 's/\t/,/g'
