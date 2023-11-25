@@ -101,3 +101,49 @@ To scrape data from HTML and store it into an SQL database, you can follow these
 6. **Repeat the process**: If there are multiple records to scrape, repeat the steps above for each record, fetching the HTML, parsing it, preparing the data, and inserting it into the SQL database.
 
 By following these steps, you can scrape data from HTML and store it into an SQL database. Remember to handle errors, sanitize the data, and ensure the integrity of the database schema during the scraping and insertion process.
+
+
+Creating a PHP script to display arbitrary data on an HTML page is a common task in web development. Below is a simple example of a PHP script that does this. In this script, I'll demonstrate displaying a list of names, but you can replace this with any other data you need to display.
+
+php
+Copy code
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Display Data</title>
+</head>
+<body>
+
+    <h1>Data Display</h1>
+
+    <?php
+    // Sample data - replace this with your actual data source
+    $data = array("Alice", "Bob", "Charlie");
+
+    // Check if data is not empty
+    if (!empty($data)) {
+        echo "<ul>";
+        foreach ($data as $item) {
+            echo "<li>" . htmlspecialchars($item) . "</li>";
+        }
+        echo "</ul>";
+    } else {
+        echo "<p>No data to display.</p>";
+    }
+    ?>
+
+</body>
+</html>
+This script will output a list of names in an unordered list (<ul>). Here's how it works:
+
+The $data array holds the data to be displayed. In a real-world scenario, this might come from a database or another data source.
+The foreach loop iterates over each item in the $data array.
+htmlspecialchars is used to ensure that any special characters in the data are displayed correctly and to prevent XSS (Cross-Site Scripting) attacks.
+If there's no data in the $data array, a message "No data to display." is shown instead.
+Remember to replace the $data array with your actual data source, which could be a database query result, data from an API, or any other type of data you need to display.
+
+
+
+
+
