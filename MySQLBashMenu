@@ -1,34 +1,72 @@
 #!/bin/bash
 
+# MySQL Credentials (prompting for more secure handling)
+read -p "Enter MySQL username: " DB_USER
+read -sp "Enter MySQL password: " DB_PASS
+echo
+read -p "Enter MySQL host (default 'localhost'): " DB_HOST
+DB_HOST=${DB_HOST:-localhost}
+
 # Function to display the menu
 show_menu() {
-    echo "MySQL Database Management Menu"
+    echo "MySQL Database Management Menu:"
     echo "1. List Databases"
     echo "2. Create Database"
     echo "3. Drop Database"
-    echo "4. Exit"
+    echo "4. Export Database"
+    echo "5. Import Database"
+    echo "6. List Tables in Database"
+    echo "7. Exit"
 }
 
-# Function to list databases
+# List databases
 list_databases() {
     echo "Listing databases..."
-    mysql -u username -p -e "SHOW DATABASES;"
+    mysql -u"$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -e "SHOW DATABASES;"
 }
 
-# Function to create a database
+# Create a database
 create_database() {
     echo "Enter database name to create:"
     read dbname
-    mysql -u username -p -e "CREATE DATABASE $dbname;"
+    mysql -u"$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -e "CREATE DATABASE $dbname;"
     echo "Database $dbname created."
 }
 
-# Function to drop a database
+# Drop a database
 drop_database() {
+    echo "WARNING: You are about to drop a database. This cannot be undone!"
     echo "Enter database name to drop:"
     read dbname
-    mysql -u username -p -e "DROP DATABASE $dbname;"
+    mysql -u"$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -e "DROP DATABASE $dbname;"
     echo "Database $dbname dropped."
+}
+
+# Export a database
+export_database() {
+    echo "Enter database name to export:"
+    read dbname
+    echo "Enter destination filename (e.g., /path/to/file.sql):"
+    read filename
+    mysqldump -u"$DB_USER" -p"$DB_PASS" -h"$DB_HOST" "$dbname" > "$filename"
+    echo "Database $dbname exported to $filename."
+}
+
+# Import a database
+import_database() {
+    echo "Enter database name to import into:"
+    read dbname
+    echo "Enter source filename (e.g., /path/to/file.sql):"
+    read filename
+    mysql -u"$DB_USER" -p"$DB_PASS" -h"$DB_HOST" "$dbname" < "$filename"
+    echo "Database $dbname imported from $filename."
+}
+
+# List tables in a database
+list_tables() {
+    echo "Enter database name to list tables:"
+    read dbname
+    mysql -u"$DB_USER" -p"$DB_PASS" -h"$DB_HOST" -e "USE $dbname; SHOW TABLES;"
 }
 
 # Main loop
@@ -40,7 +78,10 @@ while true; do
         1) list_databases ;;
         2) create_database ;;
         3) drop_database ;;
-        4) exit 0 ;;
+        4) export_database ;;
+        5) import_database ;;
+        6) list_tables ;;
+        7) echo "Exiting..."; exit 0 ;;
         *) echo "Invalid choice." ;;
     esac
 done
