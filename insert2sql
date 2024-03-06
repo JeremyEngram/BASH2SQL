@@ -1,12 +1,32 @@
 #!/bin/bash
 
-  read -p "Cmd2SQL: " string; echo "INSERT INTO commands (STRING) VALUES ('$string');" | sudo mysql
+# Prompt for user input and insert into 'commands' table
+insertCommand() {
+  read -p "Cmd2SQL: " string
+  echo "INSERT INTO commands (STRING) VALUES ('$string');" | mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME"
+}
 
-# inputfile="test.txt"
-# cat $inputfile | while read ip mac server; do
-#    echo "INSERT INTO test (IP,MAC,SERVER) VALUES ('$ip', '$mac', '$server');"
-# done | sudo mysql -uroot -ptest test;
+# Load data from a file into a specified table
+loadDataFromFile() {
+  local inputFile="test.txt"
+  local tableName="test" # Change this to your actual table name
+  mysql -u"$DB_USER" -p"$DB_PASS" "$DB_NAME" -e "LOAD DATA INFILE '$inputFile' INTO TABLE $tableName FIELDS TERMINATED BY ' ';"
+}
 
-#LOAD DATA INFILE 'test.txt'
-#    INTO TABLE tbl_name
-#    FIELDS TERMINATED BY ' ';
+# Main script starts here
+DB_USER="root" # or another user with appropriate permissions
+DB_PASS="password" # It's better to prompt for this or use a secured method
+DB_NAME="your_database_name"
+
+# Check for command-line arguments
+if [[ $# -gt 0 ]]; then
+  if [[ "$1" == "loadfile" ]]; then
+    loadDataFromFile
+  else
+    echo "Invalid argument. Usage: $0 [loadfile]"
+    exit 1
+  fi
+else
+  insertCommand
+fi
+
